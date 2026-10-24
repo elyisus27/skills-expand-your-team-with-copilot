@@ -1,0 +1,61 @@
+name: Report a problem
+description: Tell us what is not working and what should happen instead.
+title: "Problem: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        You do not need to know how the website is built. Describe what you saw in everyday words. Please do not include student names, email addresses, or other private information.
+  - type: dropdown
+    id: area
+    attributes:
+      label: Where did you notice the problem?
+      options:
+        - Finding or viewing activities
+        - Activity details or schedule
+        - Signing up or removing a student
+        - Search or filters
+        - Login
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: What went wrong?
+      description: Tell us what you were trying to do and what happened.
+      placeholder: I was trying to... but...
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: What steps show the problem?
+      description: List the steps someone can follow to see it. If it only happened once, say so.
+      placeholder: |
+        1. Open...
+        2. Select...
+        3. Notice...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What should happen after this is fixed?
+      description: Describe the result that would solve the problem.
+    validations:
+      required: true
+  - type: textarea
+    id: hints
+    attributes:
+      label: Any ideas that might help?
+      description: If you have an idea about what may be causing the problem or how to fix it, share it here. It is okay if you are not sure.
+    validations:
+      required: false
+  - type: textarea
+    id: context
+    attributes:
+      label: Helpful details or limits
+      description: Add anything else that may help, such as which device or browser you used, or things that should not change. Write "None" if there is nothing else.
+    validations:
+      required: true
