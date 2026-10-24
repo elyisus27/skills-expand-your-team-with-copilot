@@ -165,14 +165,13 @@ initial_activities = {
         "participants": ["william@mergington.edu", "jacob@mergington.edu"]
     },
     "Manga Maniacs": {
-        "description": "Read and discuss manga while exploring Japanese storytelling and art",
-        "schedule": "Wednesdays, 3:15 PM - 4:45 PM",
+        "description": "Dive into epic adventures, unforgettable heroes, and imaginative worlds as we explore the stories that make Japanese manga so captivating.",
+        "schedule": "Tuesdays, 7:00 PM",
         "schedule_details": {
-            "days": ["Wednesday"],
-            "start_time": "15:15",
-            "end_time": "16:45"
+            "days": ["Tuesday"],
+            "start_time": "19:00"
         },
-        "max_participants": 20,
+        "max_participants": 15,
         "participants": []
     }
 }
@@ -197,4 +196,3 @@ initial_teachers = [
         "role": "admin"
     }
 ]
-
