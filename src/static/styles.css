@@ -5,6 +5,7 @@
   --primary-light: #534bae;
   --primary-dark: #000051;
   --primary-text: #ffffff;
+  --primary-heading: #1a237e;
 
   /* Secondary colors */
   --secondary: #ff6f00;
@@ -32,6 +33,22 @@
   --info-light: #d1ecf1;
 }
 
+body[data-theme="dark"] {
+  color-scheme: dark;
+  --background: #121212;
+  --surface: #1e1e1e;
+  --text-primary: #eeeeee;
+  --text-secondary: #b0b0b0;
+  --border: #424242;
+  --border-light: #333333;
+  --border-focus: #616161;
+  --primary-heading: #aab4ff;
+  --success-light: #1b3a20;
+  --warning-light: #4a3515;
+  --error-light: #4a1c1c;
+  --info-light: #17363b;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -41,6 +58,7 @@
 
 body {
   font-family: Arial, sans-serif;
+  color-scheme: light;
   line-height: 1.4;
   color: var(--text-primary);
   max-width: 1200px;
@@ -91,7 +109,7 @@ section h3 {
   margin-bottom: 15px;
   padding-bottom: 8px;
   border-bottom: 1px solid var(--border);
-  color: var(--primary);
+  color: var(--primary-heading);
   font-size: 1.1rem;
 }
 
@@ -113,7 +131,7 @@ section h3 {
   margin-bottom: 15px;
   padding-bottom: 8px;
   border-bottom: 1px solid var(--border);
-  color: var(--primary);
+  color: var(--primary-heading);
   font-size: 1.1rem;
 }
 
@@ -171,7 +189,7 @@ section h3 {
 
 .activity-card h4 {
   margin-bottom: 8px;
-  color: var(--primary);
+  color: var(--primary-heading);
   font-size: 1rem;
   letter-spacing: 0.3px;
   padding-bottom: 6px;
@@ -246,7 +264,7 @@ section h3 {
 }
 
 .participants-list h5 {
-  color: var(--primary);
+  color: var(--primary-heading);
   margin-bottom: 5px;
   font-size: 0.8em;
 }
@@ -445,7 +463,7 @@ button {
 
 /* Login modal specific styling */
 #login-modal .modal-content h3 {
-  color: var(--primary);
+  color: var(--primary-heading);
   font-size: 1.2rem;
   margin-bottom: 15px;
   text-align: center;
@@ -617,6 +635,9 @@ footer {
   position: absolute;
   top: 10px;
   right: 15px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 #user-status {
@@ -648,6 +669,10 @@ footer {
 
 .icon-button:hover {
   background-color: rgba(255, 255, 255, 0.3);
+}
+
+#theme-toggle {
+  white-space: nowrap;
 }
 
 .user-icon {
