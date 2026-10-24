@@ -26,6 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const closeLoginModal = document.querySelector(".close-login-modal");
   const loginMessage = document.getElementById("login-message");
   const themeToggle = document.getElementById("theme-toggle");
+  const viewToggle = document.getElementById("view-toggle");
 
   // Activity categories with corresponding colors
   const activityTypes = {
@@ -43,6 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let searchQuery = "";
   let currentDay = "";
   let currentTimeRange = "";
+  let currentView = "cards";
 
   // Authentication state
   let currentUser = null;
@@ -507,10 +509,167 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Display filtered activities
+    if (currentView === "calendar") {
+      renderCalendar(filteredActivities);
+      return;
+    }
     Object.entries(filteredActivities).forEach(([name, details]) => {
       renderActivityCard(name, details);
     });
   }
+
+  // Convert "HH:MM" to minutes after midnight
+  function toMinutes(time) {
+    const [hours, minutes] = time.split(":").map(Number);
+    return hours * 60 + minutes;
+  }
+
+  // Place entries that overlap side by side by giving each a column
+  function assignColumns(entries) {
+    entries.sort((a, b) => a.start - b.start || a.end - b.end);
+    let group = [];
+    let groupEnd = 0;
+    const finishGroup = () => {
+      const columns = Math.max(0, ...group.map((e) => e.column + 1));
+      group.forEach((e) => (e.columns = columns));
+      group = [];
+    };
+    entries.forEach((entry) => {
+      if (group.length && entry.start >= groupEnd) {
+        finishGroup();
+      }
+      const used = group
+        .filter((e) => e.end > entry.start)
+        .map((e) => e.column);
+      let column = 0;
+      while (used.includes(column)) column++;
+      entry.column = column;
+      group.push(entry);
+      groupEnd = Math.max(groupEnd, entry.end);
+    });
+    finishGroup();
+  }
+
+  // Render a one-week calendar (Sunday - Saturday, time going down)
+  function renderCalendar(activities) {
+    const days = [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+    ];
+    const entriesByDay = {};
+    days.forEach((day) => (entriesByDay[day] = []));
+    let earliest = 24 * 60;
+    let latest = 0;
+
+    Object.entries(activities).forEach(([name, details]) => {
+      const schedule = details.schedule_details;
+      if (!schedule) return;
+      const start = toMinutes(schedule.start_time);
+      const end = Math.max(toMinutes(schedule.end_time), start + 15);
+      earliest = Math.min(earliest, start);
+      latest = Math.max(latest, end);
+      schedule.days.forEach((day) => {
+        if (entriesByDay[day]) {
+          entriesByDay[day].push({ name, details, start, end });
+        }
+      });
+    });
+
+    const firstHour = Math.floor(earliest / 60);
+    const lastHour = Math.min(24, Math.ceil(latest / 60));
+    const hourHeight = 60;
+    const gridHeight = (lastHour - firstHour) * hourHeight;
+
+    const calendar = document.createElement("div");
+    calendar.className = "calendar";
+
+    const header = document.createElement("div");
+    header.className = "calendar-header";
+    header.innerHTML =
+      '<div class="calendar-time-spacer"></div>' +
+      days.map((day) => `<div class="calendar-day-name">${day}</div>`).join("");
+    calendar.appendChild(header);
+
+    const body = document.createElement("div");
+    body.className = "calendar-body";
+
+    const timeColumn = document.createElement("div");
+    timeColumn.className = "calendar-time-column";
+    timeColumn.style.height = `${gridHeight}px`;
+    for (let hour = firstHour; hour < lastHour; hour++) {
+      const label = document.createElement("div");
+      label.className = "calendar-time-label";
+      label.style.top = `${(hour - firstHour) * hourHeight}px`;
+      label.textContent = `${hour % 12 || 12}:00 ${hour < 12 ? "AM" : "PM"}`;
+      timeColumn.appendChild(label);
+    }
+    body.appendChild(timeColumn);
+
+    days.forEach((day) => {
+      const column = document.createElement("div");
+      column.className = "calendar-day-column";
+      column.style.height = `${gridHeight}px`;
+      column.style.backgroundSize = `100% ${hourHeight}px`;
+
+      const entries = entriesByDay[day];
+      assignColumns(entries);
+      entries.forEach((entry) => {
+        const { name, details } = entry;
+        const type = activityTypes[getActivityType(name, details.description)];
+        const enrolled = details.participants.length;
+        const el = document.createElement("div");
+        el.className = "calendar-entry";
+        el.style.top = `${((entry.start - firstHour * 60) / 60) * hourHeight}px`;
+        el.style.height = `${((entry.end - entry.start) / 60) * hourHeight}px`;
+        el.style.width = `${100 / entry.columns}%`;
+        el.style.left = `${(entry.column * 100) / entry.columns}%`;
+        if (type) {
+          el.style.backgroundColor = type.color;
+          el.style.color = type.textColor;
+        }
+        el.tabIndex = 0;
+        el.title =
+          `${name}\n${details.description}\n${formatSchedule(details)}\n` +
+          `Enrolled: ${enrolled}/${details.max_participants}`;
+        const nameEl = document.createElement("strong");
+        nameEl.textContent = name;
+        const countEl = document.createElement("span");
+        countEl.textContent = `${enrolled}/${details.max_participants}`;
+        el.append(nameEl, countEl);
+        column.appendChild(el);
+      });
+      body.appendChild(column);
+    });
+
+    calendar.appendChild(body);
+    activitiesList.appendChild(calendar);
+  }
+
+  // Switch between card view and calendar view
+  function setView(view) {
+    currentView = view;
+    const isCalendar = view === "calendar";
+    activitiesList.classList.toggle("calendar-mode", isCalendar);
+    viewToggle.setAttribute("aria-pressed", String(isCalendar));
+    viewToggle.setAttribute(
+      "aria-label",
+      `Switch to ${isCalendar ? "card" : "calendar"} view`
+    );
+    viewToggle.innerHTML = `
+      <span aria-hidden="true">${isCalendar ? "🗂️" : "📅"}</span>
+      <span>${isCalendar ? "Card view" : "Calendar view"}</span>
+    `;
+    displayFilteredActivities();
+  }
+
+  viewToggle.addEventListener("click", () =>
+    setView(currentView === "cards" ? "calendar" : "cards")
+  );
 
   // Function to render a single activity card
   function renderActivityCard(name, details) {

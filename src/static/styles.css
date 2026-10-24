@@ -693,3 +693,71 @@ footer {
 #logout-button:hover {
   background-color: rgba(255, 255, 255, 0.3);
 }
+
+/* Calendar view */
+#activities-list.calendar-mode {
+  display: block;
+}
+
+.calendar {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow-x: auto;
+}
+
+.calendar-header,
+.calendar-body {
+  display: grid;
+  grid-template-columns: 70px repeat(7, minmax(110px, 1fr));
+  min-width: 840px;
+}
+
+.calendar-header {
+  border-bottom: 1px solid var(--border);
+  font-weight: bold;
+  color: var(--text-primary);
+}
+
+.calendar-day-name {
+  padding: 8px 4px;
+  text-align: center;
+  border-left: 1px solid var(--border);
+}
+
+.calendar-time-column {
+  position: relative;
+}
+
+.calendar-time-label {
+  position: absolute;
+  right: 6px;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  transform: translateY(-50%);
+}
+
+.calendar-day-column {
+  position: relative;
+  border-left: 1px solid var(--border);
+  background-image: linear-gradient(var(--border-light) 1px, transparent 1px);
+}
+
+.calendar-entry {
+  position: absolute;
+  box-sizing: border-box;
+  padding: 2px 4px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  font-size: 0.75rem;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  cursor: default;
+}
+
+.calendar-entry:hover,
+.calendar-entry:focus {
+  z-index: 2;
+  outline: 2px solid var(--primary);
+}
