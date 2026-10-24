@@ -32,9 +32,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const activityTypes = {
     sports: { label: "Sports", color: "#e8f5e9", textColor: "#2e7d32" },
     arts: { label: "Arts", color: "#f3e5f5", textColor: "#7b1fa2" },
-    academic: { label: "Academic", color: "#e3f2fd", textColor: "#1565c0" },
+    academic: { label: "Academic", color: "#f0fdf4", textColor: "#166534" },
     community: { label: "Community", color: "#fff3e0", textColor: "#e65100" },
-    technology: { label: "Technology", color: "#e8eaf6", textColor: "#3949ab" },
+    technology: { label: "Technology", color: "#ecfccb", textColor: "#3f6212" },
   };
 
   // State for activities and filters

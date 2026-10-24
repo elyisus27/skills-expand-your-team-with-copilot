@@ -1,20 +1,20 @@
 /* Color palette */
 :root {
   /* Primary colors */
-  --primary: #1a237e;
-  --primary-light: #534bae;
-  --primary-dark: #000051;
+  --primary: #4d7c0f;
+  --primary-light: #65a30d;
+  --primary-dark: #365314;
   --primary-text: #ffffff;
-  --primary-heading: #1a237e;
+  --primary-heading: #365314;
 
   /* Secondary colors */
-  --secondary: #ff6f00;
-  --secondary-light: #ffa040;
-  --secondary-dark: #c43e00;
-  --secondary-text: #ffffff;
+  --secondary: #84cc16;
+  --secondary-light: #a3e635;
+  --secondary-dark: #65a30d;
+  --secondary-text: #1a2e05;
 
   /* Neutral colors */
-  --background: #f5f5f5;
+  --background: #f7fee7;
   --surface: #ffffff;
   --text-primary: #333333;
   --text-secondary: #666666;
@@ -42,7 +42,7 @@ body[data-theme="dark"] {
   --border: #424242;
   --border-light: #333333;
   --border-focus: #616161;
-  --primary-heading: #aab4ff;
+  --primary-heading: #bef264;
   --success-light: #1b3a20;
   --warning-light: #4a3515;
   --error-light: #4a1c1c;
@@ -59,6 +59,7 @@ body[data-theme="dark"] {
 body {
   font-family: Arial, sans-serif;
   color-scheme: light;
+  isolation: isolate;
   line-height: 1.4;
   color: var(--text-primary);
   max-width: 1200px;
@@ -66,6 +67,41 @@ body {
   padding: 12px;
   background-color: var(--background);
   font-size: 0.9rem;
+}
+
+.branch-background {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.branch-background path {
+  fill: none;
+  stroke: var(--primary-light);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-dasharray: 10 16;
+  opacity: 0.35;
+  animation: branch-flow 60s linear infinite;
+}
+
+.branch-background path:nth-child(2) {
+  stroke: var(--secondary-dark);
+  animation-duration: 75s;
+  animation-direction: reverse;
+}
+
+.branch-background path:nth-child(3) {
+  animation-duration: 90s;
+}
+
+@keyframes branch-flow {
+  to {
+    stroke-dashoffset: -520;
+  }
 }
 
 header {
@@ -80,6 +116,21 @@ header {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.mascot-lineup {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.mascot-lineup img {
+  width: 58px;
+  height: 58px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.2));
 }
 
 header h1 {
@@ -213,8 +264,8 @@ section h3 {
   position: absolute;
   top: 8px;
   right: 8px;
-  background: #e8eaf6;
-  color: #3949ab;
+  background: #ecfccb;
+  color: #3f6212;
   font-size: 0.65rem;
   font-weight: bold;
   padding: 2px 6px;
@@ -515,7 +566,7 @@ footer {
 .search-box input:focus {
   outline: none;
   border-color: var(--primary-light);
-  box-shadow: 0 0 0 2px rgba(83, 75, 174, 0.1);
+  box-shadow: 0 0 0 2px rgba(101, 163, 13, 0.1);
 }
 
 .search-box button {
@@ -760,4 +811,10 @@ footer {
 .calendar-entry:focus {
   z-index: 2;
   outline: 2px solid var(--primary);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .branch-background path {
+    animation: none;
+  }
 }
