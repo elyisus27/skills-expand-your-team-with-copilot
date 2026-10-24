@@ -1,11 +1,13 @@
 # Mergington High School Activities
 
-A super simple website application that allows students to view and sign up for extracurricular activities.
+A website for students and teachers to explore and manage Mergington High School's extracurricular activities.
 
 ## Features
 
-- View all available extracurricular activities
-- Sign up for activities
+- Browse activities, including their descriptions, schedules, difficulty levels, and participant counts
+- Search activities and filter by category, difficulty, day, or time
+- Sign in as a teacher to register students for activities or remove their registrations
+- Switch between light and dark themes; the selected theme is saved in your browser
 
 ## Development Guide
 
