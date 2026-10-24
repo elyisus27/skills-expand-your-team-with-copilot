@@ -1,0 +1,47 @@
+name: Suggest a website improvement
+description: Explain a change that would make the activities website more useful.
+title: "Improvement: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Describe the need and the result you want. You do not need to know how to make the change.
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem should this solve?
+      description: Who is affected, and what are they trying to do?
+      placeholder: Students need a way to...
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: What would you like the website to do?
+      description: Describe your idea or a simple example of how it would work.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: How will we know this change is complete?
+      description: List the results a student or teacher should be able to see or do.
+      placeholder: |
+        - A student can...
+        - A teacher can...
+    validations:
+      required: true
+  - type: textarea
+    id: hints
+    attributes:
+      label: Examples or hints
+      description: Share a screenshot, example, or anything that might help get started. Please do not include private student information.
+    validations:
+      required: false
+  - type: textarea
+    id: context
+    attributes:
+      label: Limits or related information
+      description: Mention related pages, required rules, or things that should not change. Write "None" if there is nothing else.
+    validations:
+      required: true

@@ -1,0 +1,59 @@
+name: Add or update an activity
+description: Request a change to an extracurricular activity shown on the website.
+title: "Activity: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this form to add a new activity or change its information. Please do not include student names, email addresses, or other private information.
+  - type: dropdown
+    id: change
+    attributes:
+      label: What would you like to do?
+      options:
+        - Add an activity
+        - Update an activity
+        - Remove an activity
+    validations:
+      required: true
+  - type: input
+    id: activity_name
+    attributes:
+      label: Activity name
+      description: For an update or removal, use the current name shown on the website.
+      placeholder: Chess Club
+    validations:
+      required: true
+  - type: textarea
+    id: details
+    attributes:
+      label: What should the activity information be?
+      description: Include the description, meeting days and times, and maximum number of participants. Include the category or difficulty if you know them. For an update, say which details should change. For a removal, explain why.
+      placeholder: |
+        Description:
+        Meeting days and times:
+        Maximum participants:
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: How will we know this change is complete?
+      description: Describe what a student or teacher should see on the website.
+      placeholder: The activity appears with the correct name, description, schedule, and participant limit.
+    validations:
+      required: true
+  - type: textarea
+    id: hints
+    attributes:
+      label: Examples or helpful details
+      description: Share an example or an idea about how this change could work. It is okay if you are not sure.
+    validations:
+      required: false
+  - type: textarea
+    id: context
+    attributes:
+      label: Helpful details or limits
+      description: Share any related information, special requirements, or things that should not change. Write "None" if there is nothing else.
+    validations:
+      required: true
